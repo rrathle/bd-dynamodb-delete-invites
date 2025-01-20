@@ -82,10 +82,11 @@ public class EventDao {
      * @return the updated state of the event
      */
     public Event cancelEvent(String eventId) {
-        // PARTICIPANTS: replace this implementation to perform a soft delete
-        Event canceledEvent = new Event();
-        canceledEvent.setId(eventId);
-        mapper.delete(canceledEvent);
-        return null;
+        // PARTICIPANTS: replace this implementation to perform a soft delete, works because it sets the cancelled to true so when they load the events the user only loads the events that arent canceled
+        Event event = mapper.load(Event.class, eventId);
+        event.setCanceled(true);
+        mapper.save(event);
+        return event;
+
     }
 }
